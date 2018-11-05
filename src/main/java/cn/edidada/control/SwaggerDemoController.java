@@ -1,30 +1,36 @@
 package cn.edidada.control;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static springfox.documentation.builders.PathSelectors.regex;
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/swagger")
 @EnableSwagger2
 public class SwaggerDemoController {
-    @RequestMapping(value = "/demo2.do")
+
+    @RequestMapping(value = "/demos.do")
     String getDemo() {
-        return "Hello World \n" + "Spring boot3";
+        return "This is a demo";
     }
 
-    @Bean
-    public Docket swaggerSpringMvcPlugin() {
-        ApiInfo apiInfo = new ApiInfo("sample of springboot", "sample of springboot", null, null, null, null, null);
-        Docket docket = new Docket(DocumentationType.SWAGGER_2).select().paths(regex("/user/.*")).build()
-                .apiInfo(apiInfo).useDefaultResponseMessages(false);
-        return docket;
+    @RequestMapping(value = {
+            "/abc",
+            "/page",
+            "page*",
+            "view/*,**/msg"
+    })
+    String indexMultipleMapping() {
+        return "Hello from index multiple mapping.";
     }
 
+    @RequestMapping(value = "/postdemo.do",method = RequestMethod.HEAD)
+    String getDemos() {
+        return "This is a demo";
+    }
+    @RequestMapping(value = "/getdemo.do",method = RequestMethod.GET)
+    String getDemoss() {
+        return "This is a demo";
+    }
 }
